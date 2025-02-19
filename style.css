@@ -1,0 +1,23 @@
+body {
+    /* Set line height to 1.5 times the font size
+       and use the OS’s UI font as the website font
+     */
+    font: 100%/1.5 system-ui;
+    max-width: 90%;
+    margin-inline: auto;
+   }
+   
+.fit {
+    max-width: 75%;
+    max-height: 75%;
+}
+
+#bold{
+  font-weight: bold;
+}
+
+p{
+  font-size: 25px;
+  float: none;
+}
+

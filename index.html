@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonny</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://vis-society.github.io/assignments/report.css" />
+</head>
+<body>
+    <header>
+		<h1>
+			<small>Assignment 2</small>
+			Exploratory Data Analysis
+		</h1>
+
+		<p>
+			<strong>Bonny Mahajan</strong> — <em>bonny151@mit.edu</em>
+		</p>
+	</header>
+
+
+    <section>
+        <h2>Subtheme: Speculation</h2>
+
+        <p id="bold">Introduction</p>
+        <p>After reading the article "When Private Equity Becomes Your Landlord," I was inspired to dive deeper into housing sales data in the Boston housing market. The article highlights the significant issue of large institutions and investors buying up properties and the effect it may have on renters and housing accessibility in general.</p>
+        <h3>
+        For my exploration I want to explore three broader areas of questions: </h3>
+        <p> 1. How do sales vary across different zip codes? Do investors buy a lot in Boston ? Is this issue more pronounced in certain areas? Understanding this could be key in shaping more targeted and effective policies. 
+            <br>2. I want to examine the different types of investors, their properties, and the values they hold in the market. This could provide insights into how investors are influencing the market. 
+            <br>3. Finally, I want to look at trends in flipping to understand how it has evolved over the years, and what types of properties are most affected. 
+            </p>
+            <p>By investigating these areas, we can gain valuable information to help inform better and more tailored policy development.
+            </p>
+    </section>
+
+
+    <p id="bold">General Analysis of Data and Data Quality</p>
+    <p>The dataset contains 49,301 residential real estate sales across 63 fields, covering property details, transaction data, investor types, and geographic information.
+        First I wanted to see how data is spread across the greater boston area.
+    </p>
+    <figure>
+        <img src="01.png" class="fit">
+        <figcaption>
+            Boston’s central ZIP codes see the highest sales, indicating strong demand in areas like 02116 and 02118. Lower sales in outer ZIP codes suggest lower density or fewer transactions.        </figcaption>
+    </figure>
+    <p>We see a significant variation in sales volume across different locations. The highest concentrations of sales are understandably in the central Boston area with zips such as 02116 (12,705 sales), 02118 (8,913 sales), 02115 (5,309 sales), 02114 (5,225 sales), and 02111 (3,462 sales), indicating that these areas are where there is more demand than supply.
+        In contrast, some ZIP codes, including 02445, 02134, and 02126, have only a few recorded sales, suggesting they may be lower-density residential areas or regions with fewer recent real estate sales. The extreme variation between high and low sales ZIP codes suggests substantial differences in market activity across different neighborhoods.
+    </p>
+    <u>YearBuilt vs Year</u>
+    <p>Through further investigation and data analysis, I identified fields with values that were difficult to interpret or potentially erroneous. For example, in the Year_Built field, a significant number of properties have a recorded year of 0, which is likely inaccurate. As a result, for my analysis, I found that the Year field (representing the original construction year of the building, rather than Year_Built) provided a more reliable measure. Below are two visualizations: one highlighting anomalies in Year_Built and another showcasing the expected values in Year.</p>
+    <figure>
+        <img src="02.png" class="fit">
+        <figcaption>
+        Data Quality:    Data inconsistencies were found in the Year_Built field, with many properties recorded as year 0.        </figcaption>
+    </figure>
+    <figure>
+        <img src="03.png" class="fit">
+        <figcaption>
+        Data Quality:     Using the Year field instead provided a more reliable measure for analysis.        </figcaption>
+    </figure>
+    <p>Next I also wanted to understand the average annual value we were looking at in the dataset to uncover how value varies and what ranges are represented.
+    </p>
+    <figure>
+        <img src="04.png" class="fit">
+        <figcaption>
+            Values range widely, with a few exceeding $100M but most concentrated below $10M. The distribution is right-skewed, with many transactions around $1M and fewer high-value sales.        </figcaption>
+    </figure>
+    <p>We see the points span a wide range, from few extremely high values (100M +) to more moderate figures less $5M. There is a clear concentration of sales numbers below $10M, with many being around $1M and some more occurrences in the $10M–$20M range.The distribution appears to be right-skewed, with fewer ultra-high-value transactions and many smaller ones. 
+    <br><br> Next, when looking at the ‘style’ field - I uncovered that there was a ‘Null’ style as an option too. However, as shown by the next graph no actual entries fell in that category. 
+    </p>
+    <figure>
+        <img src="05.png" class="fit">
+        <figcaption>
+       data quality check: visualize distribution of 'style' field to inspect any NULL values, so that we can tailor our deeper analysis if needed.
+        </figcaption>
+    </figure>
+    <p>Personally, I found the prop_type field more informative than style, as it provided more detailed insights into the property itself. Throughout the deeper analysis, I used either prop_type or style, depending on which field produced more meaningful visualizations and insights.
+        With these initial insights, let’s dive deeper into our data to answer our questions.
+    </p>
+
+
+  <p id="bold">Question 1: How do different zip codes compare to each other in terms of sales data and property types?</p>
+   <p id="bold">1.1 Are there some zip codes where we have more data i.e. more sales happening ? If so, are there specific types of buildings that are more popular there?</p>
+   <figure>
+    <img src="11.png" class="fit">
+    <figcaption>
+        Sales are heavily concentrated in ZIP codes 02116, 02118, 02114, and 02115, where row-middle and high-rise properties dominate. This suggests a preference for dense, multi-unit housing in high-demand areas.
+    </figcaption>
+</figure>
+    <p>As expected the distribution is not even. Most data is available for zip codes 02116, 02118 02114 and 02115 indicating these are zip codes where most sales occurred. I also wanted to understand why this might be and if this is affected at all by the style of properties available in these zip codes. When we map ‘Style’ we see that row-middle properties are by far the most common, particularly in areas like 02116, 02118, and 02115, which are marked by very high counts. This suggests that these areas may have a strong preference for multi-unit or row-style housing, potentially due to factors like density of population or city planning policies.
+    <br><br> High-rise properties are also concentrated in a few zip code areas in Boston like 02116 and 02111, which is typical of dense busy cities. On the other hand, larger homes like duplexes and deckers are less popular/available.The concentration of certain types of properties in certain ZIP codes shows higher sales interest in more lucrative, dense areas. 
+    <br><br>  Next I wanted to look into whether these high density zipcodes are being targeted by institutional investors or if there's a trend otherwise in who is buying properties in these hot areas. While looking at this I wanted to include a measure of annual value spread per zip code to check if price mattered (turns out, it does!)
+    </p>   
+   
+   <p id="bold">1.2 What does the distribution of property values look like across different ZIP codes, and who is purchasing these properties? Is there an increasing trend of larger investors acquiring them? Additionally, what does the value distribution reveal about the market?</p>
+   <figure>
+    <img src="12.png" class="fit">
+    <figcaption>
+        visualizing investor types for different properties in different zipcode shows us the choke hold of different investors on some of the most valuable properties in high demand zipcodes.
+    </figcaption>
+</figure>
+   <p>The distribution of property values across different zip codes reveals a clear distinction between high and low- average annual value areas, with certain zip codes such as 02118, 02111 showing high average annual values, which can exceed $20M and often be > $ 1M. These areas likely correspond to in demand neighborhoods, with properties being primarily acquired by institutional and large investors. This is supported by the use of larger symbols for these investor types, indicating their dominance in these higher-end properties. 
+    <br> <br> The property types in these higher-value zip codes are RCDs and commercial properties (COM) clustering in the top half of the graph.
+    <br> <br> Conversely, residential properties such as single-family (R1F) and three-family homes (R3F) are more common in less crowded zip codes, often priced below $20M - but their occurrence (in terms of numbers does not seem to be that high).
+    <br> <br> So we see Institutional investors are particularly focused on large, expensive properties in prime locations reflecting a strategy centered on high-value investments. Large investors, meanwhile, display a more diversified approach, acquiring both high and moderate-value properties across a wider range of zip codes and property types. To me this indicated that large investors may also be going after smaller properties that would otherwise be of interest to normal non investors (if price was not so high).
+    </p>
+
+   <p id="bold">1.3 This also got me curious about the the number of transactions undertaken by different types of investors involved in buying and selling properties across various zip codes.</p>
+   <figure>
+    <img src="13.png" class="fit">
+    <figcaption>
+        Non-investors dominate transaction volume, but investor purchases carry different implications. Market trends shift over time due to changing investor behavior and economic conditions.
+    </figcaption>
+</figure>
+   <p>In terms of number of transactions, we see that non-investors have the highest number of transactions across most zip codes. This could suggest that these areas are primarily driven by individual buyers rather than institutional or large-scale investors. 
+    <br> <br> While the number of transactions suggests that non-investors dominate the market in 1.3, the nature of these transactions is equally important. A single purchase by a small, medium, or large investor carries a different weight than a single transaction by a non-investor, as investors are likely acquiring properties for rental income, redevelopment, or resale, whereas non-investors are typically purchasing for personal use (explored more in Topic #2). 
+    <br> <br> Moreover, while the raw transaction counts indicate where activity is concentrated, they don't necessarily reflect long-term trends or market dynamics. Factors like the time period of these transactions and shifts in investor behavior over different years could significantly impact the distribution.
+    </p>
+
+    <p id="bold">1.4 If we try to visualize how these transaction count numbers have changed over the years for different investor types</p>
+    <figure>
+        <img src="14.png" class="fit">
+        <figcaption>
+            Non-investor purchases peaked in the mid-2000s but declined after 2008, while investor activity has steadily increased. The market is becoming more investor-driven over time.
+        </figcaption>
+    </figure>
+    <p>The chart shows that non-investor purchases peaked in the mid-2000s before dropping significantly after the 2008 financial crisis, followed by a slow recovery since. Small and medium investors have been growing more steadily since 2008. Similarly we see an upward trajectory for all types of investors (compared to the downward general trend from peak in non investors) - which means more and more investor driven activity is lighting the region.
+    </p>
+
+    <p id="bold">Question 2 : I'm looking to better understand the ownership among different investor types, as this can inform potential regulations.
+    </p>
+    <p id="bold">2.1 How can we visualize the market value owned by different types of investors across Boston to understand the distribution of value held by each investor type? </p>
+    <figure>
+        <img src="21.png" class="fit">
+        <figcaption>
+            While non-investors have the highest number of transactions, institutional investors dominate in total property value, holding $13.4 billion. This highlights their outsized influence on the market.        </figcaption>
+    </figure>
+    <p>This adds a lot of color to the data that might otherwise in 1.3 and 1.4 show a large number of sales with non investors and shows the actual value they hold in the market.
+    <br> <br> The Institutional investors dominate in terms of average annual value, holding an incredibly large sum of $13.4 billion. This is significantly higher than all other types of investors, reinforcing the earlier chart's suggestion that institutional investors are the largest players in this market - at least in terms of the value they hold (even though they may seem behind in number of transactions as we explored in 1.3 and 1.4).Large investors hold $1.14 billion in average annual home value.Small investors hold an average annual value of $731 million, and Medium investors hold $752 million. These categories have a relatively comparable and moderate amount of average home value, indicating that their holdings are much smaller in scale than the institutional and large investors.
+    <br> <br> Non-investors (those not involved in property investment) have an average annual value of $1.63 billion. This suggests that non-investors collectively own a substantial amount of value, though it is still much smaller than investors combined. 
+    <br> <br> Now that we understand how the overall value of ownership varies, I’d like to check if this difference is due to skewed property ownership (i.e. are institutional investors only invested in the commercial spaces)?
+    </p>
+    
+    <p id="bold">2.2 I also want to examine how ownership is distributed across different types of properties.
+    </p>
+    <figure>
+        <img src="22.png" class="fit">
+        <figcaption>
+            Institutional investors dominate commercial and residential markets, holding $8.13 billion in residential properties alone. Their control may push smaller buyers toward niche markets.        </figcaption>
+    </figure>
+    <p>As expected, institutional investors hold the largest share of properties across several types, with the "COM" (Commercial) category showing the highest average annual value at $3.04 billion. This makes sense due to their potential for high returns and long-term leasing.
+    <br> <br> Interestingly, "RCD" (Residential) is another major category where institutional investors have substantial holdings, with an average annual value of $8.13 billion. Institutional investors dominate in most property types, including "CNR" (Commercial Non-Residential), "EXM" (Exempt). Their significant share in these categories suggests a preference for properties with high potential returns.
+    <br> <br> Categories like "APT" (Apartment) and "OTH" (Other) display some diversified buyers. However, large and institutional investors capture a large stake across all properties. 
+    <br> <br> Non-investors might find it more difficult to compete in markets like RCD where institutional investors have significant control. This might push smaller buyers to focus on smaller, more niche markets or less competitive property types over time.
+    </p>   
+    
+    <p id="bold">2.3 Do institutional investors have an edge when buying properties ?</p>
+    <figure>
+        <img src="23.png" class="fit">
+        <figcaption>
+            Non-investors consistently have lower average cash sales, making it harder to compete with capital-rich investors. This disadvantage is amplified by Boston’s limited housing supply.        </figcaption>
+    </figure>
+   <p>Turns out yes. Given that non-investors consistently show lower average cash sales - making it difficult for them to compete with investors who have more capital to invest, like Institutional, Large, and Medium investors.
+    <br> <br> No matter what year, we see non investors having much lower avg cash sale value which puts them at a serious disadvantage especially given the low supply in greater Boston area.
+    </p> 
+    
+    <p id="bold">2.4  Wanted to check how diversified the market is in terms of how many investments each type of institutional buyer usually owns and how has this changed across the years - i.e are the same institutional investors buying most properties? 
+    </p>
+    <figure>
+        <img src="24.png" class="fit">
+        <figcaption>
+            Institutional investor purchases spiked in 2007-2008, likely due to the housing crisis, before declining. Meanwhile, non-investors remain limited to single-property ownership.
+        </figcaption>
+    </figure>
+    <p>Per Institutional investor purchases show a sharp increase in purchases around 2007-2008, followed by a drastic decrease. The sharp rise around 2007-2008 could be tied to a financial market event or a significant opportunity that institutional investors capitalized on, possibly due to the housing crisis or a market correction. The decrease post-2008 shows a more cautious investment approach. Large and Medium investors have consistent but smaller levels of purchases, which might indicate they are more cautious and have a more stable long-term investment strategy. 
+    <br> <br>Again it is crucial to note that while most investors (irrespective of size) are still buying multiple properties - most non-investors are restricted to one. I next began to wonder if this problem is worse (in terms of ownership) for single family homes. 
+    </p>
+    
+    <p id="bold">2.5 Since single-family housing is a key issue in Boston, I wanted to examine how the number of single-family residences owned varies by different types of investors over time.</p>
+    <figure>
+        <img src="25.png" class="fit">
+        <figcaption>
+            Institutional investors increasingly target single-family homes for rentals, driving up prices and limiting availability for individual buyers. This shift reshapes the housing market and rental landscape.
+        </figcaption>
+    </figure>
+    <p>
+        <br> <br>     The increase in institutional buying could align with several macroeconomic factors over time that encouraged institutional investors to target single-family homes as a long-term rental strategy.
+        <br> <br> The rise of property management companies (to help with day to day operations) could also be factors encouraging growth from the investor standpoint. For example we see higher buying activity in periods like 2009, and 2020 which were attractive times for institutions to invest in these properties and then make money from rent.The dominance of institutional investors in single-family home ownership may further drive up prices and reduce the availability of homes for individual buyers.
+        <br> <br> The growing dominance of institutional investors also suggests a shift in the housing market toward the institutions owning rental properties, with significant implications for rental pricing, housing supply, and local markets.
+        <br> <br> With some perspective on ownership from the investor POV, I wanted to also look closely into some trends on flipping next. 
+    </p>
+
+    <p id="bold">Question 3 Understand flipping better </p>
+    <p id="bold">33.1 How does property flipping vary across different years?</p>
+    <figure>
+        <img src="31.png" class="fit">
+        <figcaption>
+            Flipping trends shifted post-2011, with long-term flips peaking in 2014-2016 as investors held properties longer. Activity declined after 2020 due to economic uncertainty and rising interest rates.
+        </figcaption>
+    </figure>
+    <p>The flipping data reveals a clear shift in investor behavior over time, with long-term flips becoming more prevalent after 2011 and peaking in 2014-2016 before experiencing a small decline. This suggests that investors increasingly favored holding properties for extended periods during this time, potentially due to rising property values and favorable economic conditions. 
+        Medium-term and short-term flips also saw an uptick post-2011, though at lower volumes compared to long-term flips, indicating periods of higher speculative activity. Notably, flipping activity across all categories was significantly lower before 2010, likely because of the 2008 financial crisis, which may have reduced investor confidence in the market and limited financing opportunities for many. 
+        The decline in flipping activity after 2020 likely is because of some economic uncertainty and disruptions caused by the COVID-19 pandemic and higher interest rates after. 
+    </p>
+    
+    <p id="bold">3.2 How does median price difference (post flipping) vary across years </p>
+    <figure>
+        <img src="32.png" class="fit">
+        <figcaption>
+            Flipping profits remained modest until 2008, then dropped sharply due to the financial crisis. A recovery began in 2011, peaking from 2014-2019, before stabilizing post-2020 amid rising interest rates.
+        </figcaption>
+    </figure>
+    <p>We see significant trends in profitability.
+        <br> <br>     In the early years from 1998 to 2008, the price changes for house flips remained stable but low, fluctuating between $40,000 and $97,000, with modest increases. This period likely represents a time when flipping was stable but did not offer substantial profits. However, following the 2008 financial crisis, there was a sharp decline in profitability. Due to the crisis - there was likely reduced demand and availability of credit.
+        <br> <br> Starting in 2011, we saw market recovery, and the median price gradually increased. This indicates that as the economy began to stabilize, opportunities for profitable flips started to emerge again. From 2014 to 2019, there was a dramatic surge in profits. This period marked the height of the flipping market, likely driven by rapidly rising property values and a growing number of investors seeking to capitalize on the recovery. The market seemed highly favorable for flippers, with substantial returns on their investments.
+        <br> <br> In the more recent years from 2020 to 2024, the price slightly declined, with the median price stabilizing around $221,500 in 2024. This indicates some cooling of the market after the peak years, possibly due to more growing competition and rising interest rates.
+     </p>
+
+
+    <p id="bold">3.3 What types of houses yield the highest return after flipping? Understanding this can help us identify the kinds of properties that should be prioritized for construction by the government.  </p>
+    <figure>
+        <img src="33.png" class="fit">
+        <figcaption>
+            Flipping returns generally increase with bedroom count, peaking at 3- and 5-bedroom properties. However, variability in larger homes suggests outliers or fewer transactions impact price trends.
+        </figcaption>
+    </figure>
+    <p>Generally, as the number of bedrooms increases from 1 to 3, the percentage change in price seems to increase as well, suggesting that flipping properties with 3 bedrooms might provide the best percentage return on investment.
+        <br> Properties with 1 bedroom show a median percentage change in price of about 25.6%. This indicates a relatively strong increase in price for flipped properties with just one bedroom.
+        Properties with 2 bedrooms show a slightly higher median percentage change of 28.3%, suggesting that these smaller properties tend to see a better price increase compared to 1-bedroom properties. 
+        However, the 4 and 5-bedroom properties show some variation, with 5-bedroom properties having the highest median price change (44.3%), and 6-bedroom properties deviating from the trend. It’s important to note that the variability within each group means that while the median price change gives an overall trend, individual properties might deviate from this pattern.
+        <br> <br> There could be fewer transactions or outliers in the higher bedroom categories influencing the price changes. The chart also indicates that there are 9 null values, which might affect the overall conclusions depending on the extent of missing data for each bedroom category.
+    </p>
+
+
+    <p id="bold">3.4 Which types of properties are most commonly purchased for flipping? Understanding this could help inform policy adjustments aimed at discouraging flipping.
+    </p>
+    <figure>
+        <img src="34.png" class="fit">
+        <figcaption>
+            Residential condominiums dominate flipping activity, likely due to ease of renovation and resale. Increased flipping may contribute to gentrification, raising home prices and reducing affordability        </figcaption>
+    </figure>
+    <p>The RCD (Residential Condominiums) category has the highest number of flips, with 1,482 occurrences. This suggests that residential condominiums are the most popular property type for flipping, likely due to their potential for renting/sale later or ease of renovation. In addition to RCD, other residential properties also have significant flipping activity. R1F (Residential 1 Family) properties have 62 flips, indicating a moderate level of flipping interest. R2F (Residential 2 Family) properties have 16 flips, which shows some investor interest in multi-unit homes, though not as much as for single-family homes. R3F (Residential 3 Family) properties saw 6 flips, suggesting that properties with more units are flipped less frequently.
+        <br> <br>     The median number of bedrooms varies among the property types. RCD properties, which had the most flips, have a median of 2 bedrooms, likely catering to a broader range of buyers or renters. Properties like R1F and R2F, with 4.5 bedrooms, suggest a focus on larger homes, which may appeal to families or investors looking to eventually resell to families. 
+        <br> <br> If trends in flipping continue to grow it could lead to gentrification, where existing residents especially in expensive areas are displaced due to rising rents and home prices. In this case, flipping will inadvertently reduce housing accessibility for many.
+     </p>
+   
+     <p id="bold">3.5 Who is engaging in flipping across different buyer types? It would be useful to analyze whether this pattern has shifted in recent years. </p>
+     <figure>
+        <img src="35.png" class="fit">
+        <figcaption>
+            LLC buyers have dominated the flipping market since 2015, signaling the increasing institutionalization of real estate. Trusts also show growth, while banks and government entities remain largely absent        </figcaption>
+    </figure>
+    <p>LLC buyers exhibit significant and consistent growth starting from around 2007, with a sharp increase from about 2015 onwards.The trend indicates a growing dominance of LLCs in the flipping market, reaching a notable peak by 2022. The steady rise suggests the institutionalization of property flipping, with LLCs playing a major role, likely reflecting the increasing corporate interest in real estate investments.Trust buyers also show a gradual upward trend, particularly from the mid-2010s onward. This could indicate the growing role of trusts in long-term real estate investments and wealth management, with more trusts engaging in property flipping. The increase, while not as sharp as LLCs, still signifies a noticeable trend towards trust involvement in the market.The almost nonexistent involvement of banks and government entities shows that the flipping market is predominantly driven by private, non-governmental actors.
+    </p>
+
+    <p id="bold">Conclusion</p>
+    <p>Analysing this market data shows trends in investor activity, sales behavior and flipping that have implications on housing accessibility and affordability in the Boston market. While non-investors account for the highest number of transactions, institutional and large investors dominate in terms of property value, particularly in high-priced in-demand zip codes. This suggests a growing influence of corporate buyers in the market, making it increasingly difficult for individual homebuyers to compete. The rise in institutional ownership, especially in residential properties, aligns with national concerns about investors shaping rental markets and housing supply.Beyond the transaction volumes and property values, this study underscores the need to consider the broader economic and policy landscape that influences these trends. 
+        <br> <br> As we looked at year wise data for different analysis, economic downturns, such as the 2008 financial crisis and COVID-19 years, have played a major role in shaping investor behavior, creating investor opportunities and affordability challenges. Policymakers looking to address these issues must carefully balance encouraging investment in the Boston area while ensuring that housing remains accessible to non-investor buyers. 
+    </p>
+
+
+
+
+
+
+</body>
+</html>
